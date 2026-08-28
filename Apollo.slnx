@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Apollo.Api/Apollo.Api.csproj" />
+  <Project Path="Apollo.Application/Apollo.Application.csproj" />
+  <Project Path="Apollo.Domain/Apollo.Domain.csproj" />
+  <Project Path="Apollo.Infrastructure/Apollo.Infrastructure.csproj" />
+  <Project Path="Apollo.IntegrationTests/Apollo.IntegrationTests.csproj" />
+  <Project Path="Apollo.UnitTests/Apollo.UnitTests.csproj" />
+</Solution>

@@ -1,8 +1,12 @@
 # Apollo — ASP.NET Core Web API Template
 
-A clean, reusable **ASP.NET Core Web API** starter template for building RESTful backend services. Built to be a solid, opinionated foundation you can clone and rename for any new project — not a finished application.
+A clean, reusable **ASP.NET Core Web API** starter template for building RESTful backend services. It provides a solid, opinionated foundation — PostgreSQL, EF Core, dual JWT/API Key authentication, policy-based authorization, structured logging, and global exception handling — so new projects can start from a working baseline instead of from scratch.
 
-> ⚠️ **Status: Work in progress.** This template is being built incrementally. See [Roadmap](#roadmap) for what's done and what's next.
+This is a **pure backend template**: no UI, no application-specific business logic. Clone it, rename it, and build your domain on top.
+
+## Purpose
+
+Rather than re-solving the same setup problems on every new project (auth, logging, config, exception handling, project structure), this template bakes in sensible defaults for those cross-cutting concerns once, correctly, so they don't need to be revisited each time. It's built to be simple enough for a solo developer to navigate, while keeping the separation of concerns needed to scale into a larger application.
 
 ## Tech Stack
 
@@ -15,11 +19,11 @@ A clean, reusable **ASP.NET Core Web API** starter template for building RESTful
 | Authorization | Policy-based |
 | Logging | Serilog |
 | API Docs | OpenAPI (+ Scalar/Swagger UI) |
-| DI | Built-in ASP.NET Core DI |
+| Dependency Injection | Built-in ASP.NET Core DI |
 
-## Project Structure
+## Architecture & Project Structure
 
-Flat layout — every project sits directly under the solution root.
+A pragmatic layered architecture, flat under the solution root — every project sits directly at `Apollo\`, no nested `src`/`tests` folders.
 
 ```
 Apollo/
@@ -29,11 +33,12 @@ Apollo/
 ├── Apollo.Domain/           # Entities, enums, domain exceptions — no dependencies
 ├── Apollo.Infrastructure/   # EF Core DbContext, repositories, auth, external services
 ├── Apollo.UnitTests/        # Unit tests
-└── Apollo.IntegrationTests/ # Integration tests (WebApplicationFactory, etc.)
+└── Apollo.IntegrationTests/ # Integration tests
 ```
 
 **Dependency direction:** `Domain` ← `Application` ← `Infrastructure` ← `Api`
-`Domain` has zero project references — it's pure C#. Everything else depends inward toward it.
+
+`Domain` is pure C# with zero project references. Every other layer depends inward toward it, giving the template the dependency-inversion benefits of Clean Architecture without the overhead of a mediator pattern or excessive project splitting.
 
 | Project | Depends on |
 |---|---|
@@ -43,38 +48,6 @@ Apollo/
 | `Apollo.Api` | `Apollo.Application`, `Apollo.Infrastructure`, `Apollo.Domain` |
 | `Apollo.UnitTests` | `Apollo.Application`, `Apollo.Domain` |
 | `Apollo.IntegrationTests` | `Apollo.Api` |
-
-## Prerequisites
-
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- [PostgreSQL](https://www.postgresql.org/download/) (or Docker)
-- Visual Studio 2026 (or VS Code with C# Dev Kit)
-
-## Getting Started
-
-```bash
-git clone https://github.com/<you>/Apollo.git
-cd Apollo
-dotnet build
-```
-
-> Database setup, migrations, and run instructions will be added once EF Core and configuration are wired up.
-
-## Roadmap
-
-- [x] Solution & project scaffolding
-- [ ] Domain base entities (`AuditableEntity`)
-- [ ] EF Core + PostgreSQL integration
-- [ ] Configuration & Options pattern
-- [ ] Serilog logging
-- [ ] Global exception handling
-- [ ] JWT authentication
-- [ ] API Key authentication
-- [ ] Authorization policies
-- [ ] OpenAPI / Scalar UI
-- [ ] DI cleanup pass
-- [ ] Unit & integration test setup
-- [ ] Template polish for reuse
 
 ## License
 

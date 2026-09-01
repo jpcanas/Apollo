@@ -1,6 +1,6 @@
 @Apollo.Api_HostAddress = http://localhost:5171
 
-GET {{Apollo.Api_HostAddress}}/weatherforecast/
+GET {{Apollo.Api_HostAddress}}/debug/app-options
 Accept: application/json
 
 ###
